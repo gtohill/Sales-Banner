@@ -1,0 +1,16 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+.flex-container{
+    display: flex;   
+    justify-content: start;
+}
+ .flex-container > div{
+     text-align: center;
+ }
+     
+ .flex-previous-offers{
+     padding: 0 2em;;
+    
+ }
