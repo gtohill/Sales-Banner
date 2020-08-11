@@ -30,9 +30,10 @@ class Sales_Banner_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-		// global $wpdb;
-		// $table  = $wpdb->prefix . 'sale_banner';
-		// $wpdb->query("DROP TABLE $table");
+		global $wpdb;
+		$table  = $wpdb->prefix . 'sales_banner';
+		$wpdb->query("DROP TABLE $table");
+		
 		update_option('show_sales_banner', '0');
 
 	}
