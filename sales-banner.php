@@ -37,6 +37,8 @@ if (!defined('WPINC')) {
  */
 define('SALES_BANNER_VERSION', '1.0.0');
 
+
+
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-sales-banner-activator.php
@@ -93,10 +95,71 @@ function my_theme_customizer($wp_customize)
 		'settings' => 'back_color',
 	)));
 
+	//  =============================
+	//  = Pick Banner Width         =
+	//  =============================
+	$wp_customize->add_setting('banner_width', array(
+		'default'     => '100%',
+		'type' => 'option',
+		'sanitize_callback' => 'sanitize_width_intval',
+		'capability'        => 'edit_theme_options',
+		'transport'   => 'refresh',
+	));
+
+	$wp_customize->add_control('banner_width', array(
+		'label'    => __('Banner Width', 'themename'),
+		'type' => 'range',
+		'input_attrs' => array(
+			'min' => 1,
+			'max' => 100,
+			'step' => 1,
+			'class' => 'example-class',
+			'style' => 'color: #ff0022',
+			),
+		'section'  => 'sales_banner_color_scheme',
+		'settings' => 'banner_width',
+	));
+
+	$wp_customize->remove_control('banner_width');
+	function sanitize_width_intval( $value ) {
+		return (int) $value;
+	}
+
+
+	//  =============================
+	//  = Pick Banner Height        =
+	//  =============================
+	$wp_customize->add_setting('banner_height', array(
+		'default'     => '42px',
+		'type' => 'option',
+		'sanitize_callback' => 'sanitize_height_intval',
+		'capability'        => 'edit_theme_options',
+		'transport'   => 'refresh',
+	));
+
+	$wp_customize->add_control('banner_height', array(
+		'label'    => __('Banner Height', 'themename'),
+		'type' => 'range',
+		'input_attrs' => array(
+			'min' => 1,
+			'max' => 42,
+			'step' => 1,
+			'class' => 'example-class',
+			'style' => 'color: #ff0022',
+			),
+		'section'  => 'sales_banner_color_scheme',
+		'settings' => 'banner_height',
+	));
+
+	function sanitize_height_intval( $value ) {
+		return (int) $value;
+	}
+
+
 	//  ================================
 	//  = Pick Primary Color(Offer Text)=
 	//  ================================
-	$wp_customize->add_setting('text_color', array(
+	$wp_customize->add_setting('offer_text_color', array(
 		'default'     => '#ffffff',
 		'type' => 'option',
 		'sanitize_callback' => 'sanitize_hex_color',
@@ -104,27 +167,58 @@ function my_theme_customizer($wp_customize)
 		'transport'   => 'refresh',
 	));
 
-	$wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'text_color', array(
+	$wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'offer_text_color', array(
 		'label'    => __('Text Color', 'themename'),
 		'section'  => 'sales_banner_color_scheme',
-		'settings' => 'text_color',
+		'settings' => 'offer_text_color',
 	)));
+
+	//  ================================
+	//  = Pick Font Size(Offer Text)   =
+	//  ================================
+
+	$wp_customize->add_setting('banner_text_size', array(
+		'capability' => 'edit_theme_options',
+		'type' => 'option',
+		'capability' => 'edit_theme_options',
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport' => 'refresh',
+	));
+
+	$wp_customize->add_control('banner_text_size', array(
+		'type' => 'select',
+		'choices' =>  array(
+			'default'=>__('Choose Font Size'),
+			'8px' => __('8px'),
+			'10px' => __('10px'),
+			'12px' => __('12px'),
+			'14px' => __('14px'),
+			'16px' => __('16px'),
+			'18px' => __('18px'),
+			'20px' => __('20px'),
+
+		),
+		'section' => 'sales_banner_color_scheme', // Add a default or your own section
+		'label' => __('Banner Text Size'),
+		'description' => __('Change font size.'),
+		'settings' => 'banner_text_size',
+	));
 }
 
 add_action('wp_head', 'sales_banner_customize_css');
 function sales_banner_customize_css()
 {
-?>	
+?>
 	<style type="text/css">
 		#sales_banner_wrapper {
 			background-color: <?php echo get_option('back_color', '#000000'); ?>;
-			color: <?php echo get_option('text_color', '#ffffff'); ?>;
+			height: <?php echo get_option('banner_height', '42px').'px' ?>;
 		}
 
 		.sales_banner_text_offer {
 			color: <?php echo get_option('offer_text_color', '#ffffff'); ?>;
+			font-size: <?php echo get_option('banner_text_size', '16px') ?>;
 		}
-	
 	</style>
 <?php
 }

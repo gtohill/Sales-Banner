@@ -2,15 +2,141 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
-.flex-container{
-    display: flex;   
-    justify-content: start;
+.flex-container {
+  display: flex;
+  justify-content: start;
 }
- .flex-container > div{
-     text-align: center;
- }
-     
- .flex-previous-offers{
-     padding: 0 2em;;
-    
- }
+.flex-container > div {
+  text-align: center;
+}
+
+.flex-previous-offers {
+  padding: 0 2em;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Set height of body and the document to 100% */
+
+/* Style tab links */
+.tablink {
+  background-color: #F7EDD4;
+  color: black;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 33%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: black;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+#active {
+  background-color: #FFFFFF;
+}
+
+#inactive {
+  background-color: #F5F5F5;
+}
+
+#update {
+  background-color: #DCDCDC;
+}
+
+.button-offer-inactive{
+  background-color: black;
+  color: white;  
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 5px 8px;
+  font-size: 10px;  
+
+}
+.button-offer-active{
+  background-color: green;
+  color: white;  
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 5px 8px;
+  font-size: 10px;  
+}
+
+.banner-tables{
+  width:100%;  
+}
+.banner-border{
+  border-bottom: 1px solid black;
+}
+.banner-first-column{
+  width:10%;
+  text-align: left;
+  padding: 5px 0;
+ 
+  
+}
+.banner-second-column{
+  text-align: left;
+  max-width:100%;
+  padding: 5px 0;
+ 
+}
+
+.update-first-column{
+  text-align: left;
+  padding: 5px 0;
+ 
+}
+.update-second-column{
+  text-align: left;
+  padding: 5px 0;
+ 
+}
+
+.update-third-column{
+  text-align: left;  
+  padding: 5px 0;
+}
+
+.update-button{
+  background-color: green;
+  color: white;  
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 5px 8px;
+  font-size: 10px; 
+}
+
+.delete-button{
+  background-color: red;
+  color: white;  
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 5px 8px;
+  font-size: 10px; 
+}
+
+.neumorph{
+  box-shadow: 10px 10px 10px #DCDCDC,
+            -10px -10px 30px #DCDCDC;
+  border-radius: 25px;
+          
+
+}

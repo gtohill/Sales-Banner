@@ -1,35 +1,41 @@
-
 const time = 8000;
 let myTimer; // used to control setInterval and clearInterval
 
 var slideIndex = 1;
 
-jQuery(document).ready(function() 
-{  
+if(location.pathname !== '/'){
+jQuery(document).ready(function () {
+
   jQuery.ajax({
-      type: 'GET',
-      url: 'http://192.168.33.11/wp-admin/admin-ajax.php',
-      data: {          
-          action: 'get_sales_banner_slider'
-      },
-      success: function(result) {
-        console.log(result.data);
-        jQuery(result.data).insertBefore("#main");
-        showSlides(slideIndex);
-        myTimer = setInterval(function () {
+    type: "GET",
+    url: "/wp-admin/admin-ajax.php",
+    data: {
+      action: "get_sales_banner_slider",
+    },
+    success: function (result) {
+      
+      jQuery(result.data).insertBefore("#main");
+      showSlides(slideIndex);
+      myTimer = setInterval(function () {
         plusSlides(1);
       }, time);
-       
-      },
-      error: function() {
-        console.log('Error occured');
-    }
+    },
+    error: function () {
+      console.log("Error occured");
+    },
   });
 });
+}
+
+showSlides(slideIndex);
+myTimer = setInterval(function () {
+  plusSlides(1);
+}, time);
 
 
 function plusSlides(n) {
   clearInterval(myTimer);
+  
   if (n < 0) {
     showSlides((slideIndex -= 1));
   } else {

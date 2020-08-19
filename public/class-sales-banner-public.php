@@ -63,17 +63,6 @@ class Sales_Banner_Public
 	public function enqueue_styles()
 	{
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Sales_Banner_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Sales_Banner_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 		wp_register_style('google-styles', "https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
 		wp_enqueue_style('google-styles');
 		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/sales-banner-public.css', array(), $this->version, 'all');
@@ -87,54 +76,33 @@ class Sales_Banner_Public
 	public function enqueue_scripts()
 	{
 		//wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/sales-banner-jquery.js', $this->version, '', true,1);
-		wp_enqueue_script($this->plugin_name."1", plugin_dir_url(__FILE__) . 'js/sales-banner-public.js', $this->version, '', true, 99);
+		wp_enqueue_script($this->plugin_name . "1", plugin_dir_url(__FILE__) . 'js/sales-banner-public.js', $this->version, '', true, 99);
 	}
 
 	public static function show_sale_banner()
 	{
 
-		// function filter_the_content_in_the_main_loop($content)
-		// {
-
-		// 	$is_sales_banner_active = get_option('show_sales_banner');
-
-
-		// 	// Check if we're inside the main loop in a single post page.
-		// 	if ( $is_sales_banner_active === "1") {
-		// 		$banner_1 = get_option('sales_banner_field_1', 'add your sales offer here');
-		// 		$banner_2 = get_option('sales_banner_field_2', 'add your sales offer here');
-		// 		$banner_3 = get_option('sales_banner_field_3', 'add your sales offer here');
-		// 		$banner_arr = array($banner_1, $banner_2, $banner_3);
-
-		// 		$add_content = "<div id='sales_banner_wrapper'>";
-		// 		foreach ($banner_arr as $banner) {
-		// 			if($banner != ''){
-		// 				$add_content .= "<div class='mySlides sales_banner_text_offer'>" . $banner . "</div>";
-		// 			}
-		// 		}
-		// 		$add_content .=
-		// 			'<button class="previous-banner banner-button" onclick="plusSlides(-1)">&#10094;</button>
-		// 		<button class="next-banner banner-button" onclick="plusSlides(1)">&#10095;</button>';
-		// 		$add_content .= "</div>";				
-		// 		return $add_content . $content;
-		// 	}
-
-		// 	return $content;
-		// }
-
-		// add_filter('the_content', 'filter_the_content_in_the_main_loop');
-
-		add_action('wp_ajax_nopriv_get_sales_banner_slider', 'get_sales_banner_slider');
-		function get_sales_banner_slider()
+		add_filter('the_content', 'filter_the_content_in_the_main_loop');
+		function filter_the_content_in_the_main_loop($content)
 		{
-			$banner_1 = get_option('sales_banner_field_1', 'add your sales offer here');
-			$banner_2 = get_option('sales_banner_field_2', 'add your sales offer here');
-			$banner_3 = get_option('sales_banner_field_3', 'add your sales offer here');
-			$banner_arr = array($banner_1, $banner_2, $banner_3);
+
+			$is_sales_banner_active = get_option('show_sales_banner');
+			if ($is_sales_banner_active === "1" && is_front_page()) {
+
+
+				global $wpdb;
+				$tablename = $wpdb->prefix . 'sales_banner';
+				$entries = $wpdb->get_results("SELECT * FROM $tablename");
+				$banner_arr = array();
+				foreach ($entries as $entry) {
+					if ($entry->active == 1) {
+						array_push($banner_arr, $entry->information);
+					}
+				}
 
 				$add_content = "<div id='sales_banner_wrapper'>";
 				foreach ($banner_arr as $banner) {
-					if($banner != ''){
+					if ($banner != '') {
 						$add_content .= "<div class='mySlides sales_banner_text_offer'>" . $banner . "</div>";
 					}
 				}
@@ -142,6 +110,40 @@ class Sales_Banner_Public
 					'<button class="previous-banner banner-button" onclick="plusSlides(-1)">&#10094;</button>
 				<button class="next-banner banner-button" onclick="plusSlides(1)">&#10095;</button>';
 				$add_content .= "</div>";
+
+				return $add_content . $content;
+			}
+			return $content;
+		}
+
+
+		add_action('wp_ajax_nopriv_get_sales_banner_slider', 'get_sales_banner_slider');
+		function get_sales_banner_slider()
+		{
+
+			$is_sales_banner_active = get_option('show_sales_banner');
+
+			global $wpdb;
+			$tablename = $wpdb->prefix . 'sales_banner';
+			$entries = $wpdb->get_results("SELECT * FROM $tablename");
+			$banner_arr = array();
+			foreach ($entries as $entry) {
+				if ($entry->active == 1) {
+					array_push($banner_arr, $entry->information);
+				}
+			}
+
+
+			$add_content = "<div id='sales_banner_wrapper'>";
+			foreach ($banner_arr as $banner) {
+				if ($banner != '') {
+					$add_content .= "<div class='mySlides sales_banner_text_offer'>" . $banner . "</div>";
+				}
+			}
+			$add_content .=
+				'<button class="previous-banner banner-button" onclick="plusSlides(-1)">&#10094;</button>
+				<button class="next-banner banner-button" onclick="plusSlides(1)">&#10095;</button>';
+			$add_content .= "</div>";
 			wp_send_json_success($add_content);
 		}
 	}

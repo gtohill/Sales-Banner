@@ -33,7 +33,7 @@ class Sales_Banner_Deactivator {
 		global $wpdb;
 		$table  = $wpdb->prefix . 'sales_banner';
 		$wpdb->query("DROP TABLE $table");
-		
+
 		update_option('show_sales_banner', '0');
 
 	}

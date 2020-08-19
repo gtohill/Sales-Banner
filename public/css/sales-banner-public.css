@@ -5,12 +5,12 @@
 #sales_banner_wrapper {
   display: flex;
   justify-content: center;
-  font-size: 2rem;
   text-align: center;
   width: 100%;
-  padding: 0.25rem 0;
+  padding: .5em 0;
   font-family: Montserrat;
 }
+
 .mySlides {
   display: none;
   -webkit-animation: fadein 2s;
