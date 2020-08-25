@@ -1,8 +1,7 @@
-const time = 8000;
-let myTimer; // used to control setInterval and clearInterval
+const sbTime = 8000;
+let sbMyTimer; // used to control setInterval and clearInterval
 
 var slideIndex = 1;
-
 if(location.pathname !== '/'){
 jQuery(document).ready(function () {
 
@@ -15,10 +14,10 @@ jQuery(document).ready(function () {
     success: function (result) {
       
       jQuery(result.data).insertBefore("#main");
-      showSlides(slideIndex);
-      myTimer = setInterval(function () {
-        plusSlides(1);
-      }, time);
+      sbShowSlides(slideIndex);
+      sbMyTimer = setInterval(function () {
+        sbPlusSlides(1);
+      }, sbTime);
     },
     error: function () {
       console.log("Error occured");
@@ -27,32 +26,32 @@ jQuery(document).ready(function () {
 });
 }
 
-showSlides(slideIndex);
-myTimer = setInterval(function () {
-  plusSlides(1);
-}, time);
+sbShowSlides(slideIndex);
+sbMyTimer = setInterval(function () {
+  sbPlusSlides(1);
+}, sbTime);
 
 
-function plusSlides(n) {
-  clearInterval(myTimer);
+function sbPlusSlides(n) {
+  clearInterval(sbMyTimer);
   
   if (n < 0) {
-    showSlides((slideIndex -= 1));
+    sbShowSlides((slideIndex -= 1));
   } else {
-    showSlides((slideIndex += 1));
+    sbShowSlides((slideIndex += 1));
   }
   if (n === -1) {
-    myTimer = setInterval(function () {
-      plusSlides(n + 2);
-    }, time);
+    sbMyTimer = setInterval(function () {
+      sbPlusSlides(n + 2);
+    }, sbTime);
   } else {
-    myTimer = setInterval(function () {
-      plusSlides(n + 1);
-    }, time);
+    sbMyTimer = setInterval(function () {
+      sbPlusSlides(n + 1);
+    }, sbTime);
   }
 }
 
-function showSlides(n) {
+function sbShowSlides(n) {
   var i;
   var slides = document.getElementsByClassName("mySlides");
 
