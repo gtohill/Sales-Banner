@@ -13,7 +13,7 @@
  * @package           Sales_Banner
  *
  * @wordpress-plugin
- * Plugin Name:       sales-banner
+ * Plugin Name:       Sales Banner
  * Plugin URI:        pivotaldesign.ca
  * Description:       Add a simple banner between the header and content to showcase sales to visitors
  * Version:           1.0.0
@@ -203,24 +203,6 @@ function my_theme_customizer($wp_customize)
 		'description' => __('Change font size.'),
 		'settings' => 'banner_text_size',
 	));
-}
-
-add_action('wp_head', 'sales_banner_customize_css');
-function sales_banner_customize_css()
-{
-?>
-	<style type="text/css">
-		#sales_banner_wrapper {
-			background-color: <?php echo get_option('back_color', '#000000'); ?>;
-			height: <?php echo get_option('banner_height', '42px').'px' ?>;
-		}
-
-		.sales_banner_text_offer {
-			color: <?php echo get_option('offer_text_color', '#ffffff'); ?>;
-			font-size: <?php echo get_option('banner_text_size', '16px') ?>;
-		}
-	</style>
-<?php
 }
 
 

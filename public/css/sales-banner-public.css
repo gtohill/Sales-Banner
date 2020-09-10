@@ -4,10 +4,9 @@
  */
 #sales_banner_wrapper {
   display: flex;
-  justify-content: center;
-  text-align: center;
+  justify-content: center;  
   width: 100%;
-  padding: .5em 0;
+  /* padding: .5em 0; */
   font-family: Montserrat;
 }
 
@@ -78,30 +77,30 @@
   }
 }
 
-.banner-button {
+.sb-banner-button {
   text-decoration: none;
   display: inline-block;
   border: none;
 }
 
-.previous-banner {
+.sb-previous-banner {
   position: absolute;
   left: 0;
   background-color: transparent;
   color: #e7e7e7;
 }
 
-.next-banner {
+.sb-next-banner {
   position: absolute;
   right: 0;
   background-color: transparent;
   color: #e7e7e7;
 }
 
-.previous-banner:hover {
+.sb-previous-banner:hover {
   color: #d3d3d3d3;
 }
-.next-banner:hover {
+.sb-next-banner:hover {
   color: #d3d3d3d3;
 }
 

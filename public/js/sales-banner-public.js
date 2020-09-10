@@ -1,40 +1,20 @@
+/**
+ * use this version with top bar
+ */
+
 const sbTime = 8000;
 let sbMyTimer; // used to control setInterval and clearInterval
 
 var slideIndex = 1;
-if(location.pathname !== '/'){
-jQuery(document).ready(function () {
-
-  jQuery.ajax({
-    type: "GET",
-    url: "/wp-admin/admin-ajax.php",
-    data: {
-      action: "get_sales_banner_slider",
-    },
-    success: function (result) {
-      
-      jQuery(result.data).insertBefore("#main");
-      sbShowSlides(slideIndex);
-      sbMyTimer = setInterval(function () {
-        sbPlusSlides(1);
-      }, sbTime);
-    },
-    error: function () {
-      console.log("Error occured");
-    },
-  });
-});
-}
 
 sbShowSlides(slideIndex);
 sbMyTimer = setInterval(function () {
   sbPlusSlides(1);
 }, sbTime);
 
-
 function sbPlusSlides(n) {
   clearInterval(sbMyTimer);
-  
+
   if (n < 0) {
     sbShowSlides((slideIndex -= 1));
   } else {
